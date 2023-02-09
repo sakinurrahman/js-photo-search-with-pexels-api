@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The best free stock photos, royalty free images & videos shared by creators.</title>
+<style>
+
+.previous_button {
+	margin-top: 20px !important;
+}
+body {
+	font-family: Arial, sans-serif;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+input, button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+#results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
+.result-item {
+  width: 20%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+}
+
+.download-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+#results {
+  display: flex;
+  justify-content: center;
+  margin-top: 11px;
+}
+.result-item {
+  border-radius: 10px;
+}
+.hero {
+	background-color: #f2f2f2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px 0px;
+}
+
+
+.hero-content {
+	background-color: white;
+	padding: 20px 20px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+	border-radius: 10px;
+	text-align: center;
+}
+
+#search-input {
+  width: 70%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: none;
+  border: 1.5px solid #00a3ff;
+  margin-bottom: 20px;
+}
+
+#search-button {
+  width: 30%;
+  padding: 10px 20px;
+  background-color: #00a3ff;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#search-button:hover {
+  background-color: #007acc;
+}
+
+   </style>
+  </head>
+  <body>
+    <div class="hero">
+        <div class="hero-content">
+          <h1>Discover Millions of Stunning Photos</h1>
+          <input id="search-input" type="text" placeholder="Search for free photos">
+          <button id="search-button">Search</button>
+        </div>
+      </div>
+      
+      <div id="results"></div>
+    
+      
+  </body>
+  <script">
+  
+  const searchButton = document.getElementById("search-button");
+const searchInput = document.getElementById("search-input");
+const resultsDiv = document.getElementById("results");
+
+let pageNumber = 1;
+
+const fetchImages = (searchQuery) => {
+  const searchTerm = searchInput.value || searchQuery;
+  fetch(`https://api.pexels.com/v1/search?query=${searchTerm}&per_page=105&page=${pageNumber}`, {
+    headers: {
+      "Authorization": "wcSa3U4os2bd0EKMOWuxf74qfd3TyKluztfBI4IhEj9nkdEl298y8irt"
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.photos)
+      resultsDiv.innerHTML = "";
+      data.photos.forEach(photo => {
+        const resultItem = document.createElement("div");
+        resultItem.classList.add("result-item");
+        resultItem.style.backgroundImage = `url('${photo.src.large}')`;
+
+        const downloadButton = document.createElement("a");
+        downloadButton.innerText = "Download";
+        downloadURL = `${photo.src.original}?cs=srgb&dl`
+        downloadButton.href = downloadURL ;
+        downloadButton.download = true;
+        downloadButton.classList.add("download-button");
+        resultItem.appendChild(downloadButton);
+
+        resultsDiv.appendChild(resultItem);
+      });
+    })
+    .catch(error => console.error(error));
+};
+
+searchButton.addEventListener("click", () => {
+  pageNumber = 1;
+  fetchImages();
+});
+
+searchInput.addEventListener("input", () => {
+  pageNumber = 1;
+  fetchImages();
+});
+
+const prevButton = document.createElement("button");
+prevButton.innerText = "Previous";
+prevButton.addEventListener("click", () => {
+  if (pageNumber > 1) {
+    pageNumber--;
+    fetchImages();
+  }
+});
+
+const nextButton = document.createElement("button");
+nextButton.innerText = "Next";
+nextButton.addEventListener("click", () => {
+  pageNumber++;
+  fetchImages();
+});
+
+const paginationDiv = document.createElement("div");
+paginationDiv.classList.add('previous_button')
+paginationDiv.appendChild(prevButton);
+paginationDiv.appendChild(nextButton);
+document.body.appendChild(paginationDiv);
+
+
+window.addEventListener('DOMContentLoaded', function(){
+    fetchImages("welcome");
+})
+  </script>
+</html>
