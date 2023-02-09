@@ -125,7 +125,7 @@ let pageNumber = 1;
 
 const fetchImages = (searchQuery) => {
   const searchTerm = searchInput.value || searchQuery;
-  fetch(`https://api.pexels.com/v1/search?query=${searchTerm}&per_page=105&page=${pageNumber}`, {
+  fetch(`https://api.pexels.com/v1/search?query=${searchTerm}&per_page=10&page=${pageNumber}`, {
     headers: {
       "Authorization": "wcSa3U4os2bd0EKMOWuxf74qfd3TyKluztfBI4IhEj9nkdEl298y8irt"
     }
