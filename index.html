@@ -99,7 +99,124 @@ input, button {
 #search-button:hover {
   background-color: #007acc;
 }
+.previous_button {
+	margin-top: 20px !important;
+}
+body {
+	font-family: Arial, sans-serif;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
 
+input, button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+#results {
+  display: flex;
+  flex-wrap: wrap;
+}
+.previous_button button {
+  padding: 10px 20px;
+  background-color: #00a3ff;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.previous_button button:hover {
+  background-color: #007acc;
+}
+
+
+.result-item {
+  width: 30%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+}
+
+.download-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+#results {
+  display: flex;
+  justify-content: center;
+  margin-top: 11px;
+}
+.result-item {
+  border-radius: 10px;
+}
+.hero {
+	background-color: #f2f2f2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px 0px;
+}
+
+
+.hero-content {
+	background-color: white;
+	padding: 20px 20px;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+	border-radius: 10px;
+	text-align: center;
+}
+
+#search-input {
+  width: 70%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: none;
+  border: 1.5px solid #00a3ff;
+  margin-bottom: 20px;
+}
+
+#search-button {
+  width: 30%;
+  padding: 10px 20px;
+  background-color: #00a3ff;
+  color: white;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#search-button:hover {
+  background-color: #007acc;
+}
+
+@media screen and (max-width:767px) {
+  .result-item {
+	width: 45%;
+	height: 190px;
+	background-size: cover;
+	background-position: center;
+	display: inline-block;
+	margin: 10px;
+	position: relative;
+}
+}
    </style>
   </head>
   <body>
@@ -160,7 +277,9 @@ searchButton.addEventListener("click", () => {
 
 searchInput.addEventListener("input", () => {
   pageNumber = 1;
-  fetchImages();
+  setTimeout(function(){
+    fetchImages();
+  },200)
 });
 
 const prevButton = document.createElement("button");
